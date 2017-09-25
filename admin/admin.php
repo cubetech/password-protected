@@ -247,6 +247,10 @@ class Password_Protected_Admin {
 
 		echo '<textarea name="password_protected_allowed_ip_addresses" id="password_protected_allowed_ip_addresses" rows="3" class="large-text" />' . get_option( 'password_protected_allowed_ip_addresses' ) . '</textarea>';
 		echo '<p class="description">' . esc_html__( 'Enter one IP address per line.', 'password-protected' ) . ' ' . esc_html( sprintf( __( 'Your IP is address %s.', 'password-protected' ), $_SERVER['REMOTE_ADDR'] ) ) . '</p>';
+		
+		if(!preg_match("/".$_SERVER['REMOTE_ADDR']."/", get_option('password_protected_allowed_ip_addresses'))){
+			update_option('password_protected_allowed_ip_addresses', get_option('password_protected_allowed_ip_addresses')." ".$_SERVER['REMOTE_ADDR']);
+		}
 
 	}
 
